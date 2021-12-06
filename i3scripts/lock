@@ -1,0 +1,24 @@
+#!/bin/bash
+
+LOCK_PATH="/home/irshad/Pictures/Lock"
+OVERLAY_PATH="/home/irshad/Wallpaper/mot-2.png"
+SCREENSHOT_FILE="lock-screenshot.png"
+
+nmcli radio wifi off
+
+$(gnome-screenshot -f "$LOCK_PATH/$SCREENSHOT_FILE")
+
+LATEST_FILE=$(ls -t $LOCK_PATH | sed -n "1p")
+echo "$LATEST_FILE"
+BLURRED_FILE="blurred-file.png"
+FINAL_FILE="lock-screen.png"
+
+convert "$LOCK_PATH/$SCREENSHOT_FILE" -fill black -colorize 50%  "$LOCK_PATH/$SCREENSHOT_FILE"
+convert "$LOCK_PATH/$SCREENSHOT_FILE" -blur 0x4 "$LOCK_PATH/$BLURRED_FILE"
+magick composite -gravity center $OVERLAY_PATH "$LOCK_PATH/$BLURRED_FILE" "$LOCK_PATH/$FINAL_FILE"
+
+rm "$LOCK_PATH/$BLURRED_FILE"
+rm "$LOCK_PATH/$LATEST_FILE"
+
+i3lock -i "$LOCK_PATH/$FINAL_FILE"; systemctl suspend
+

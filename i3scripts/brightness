@@ -1,0 +1,13 @@
+#!/bin/bash
+
+case $BLOCK_BUTTON in
+  4) /home/irshad/Documents/Code/i3scripts/brightness-down;;
+  5) xbright +100;;
+esac
+
+MAX_BRIGHTNESS=937
+
+BRIGHTNESS=$(cat '/sys/class/backlight/intel_backlight/brightness')
+PERCENTAGE=$(expr $(expr $BRIGHTNESS \* 100) / $MAX_BRIGHTNESS)
+
+echo "$PERCENTAGE%"

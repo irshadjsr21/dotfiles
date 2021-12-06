@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SINK_LIST=$(pactl list sinks)
+#SINK_FIRSTLINE=$(echo "$SINK_LIST" | grep -n "Sink #")
+#SINK_NO=$(SINK_NO | sed -r 's/([^0-9]*([0-9]*)){1}.*/\2/')
+
+#SINK_NO=$(echo "$SINK_FIRSTLINE" | awk '{print substr ($0, 9, 1)}')
+#SINK_LINE_NO=$(echo "$SINK_FIRSTLINE" | awk '{print substr ($0, 0, 1)}')
+#MUTE_LINE_NO=$(($SINK_LINE_NO + 8))
+#MUTE_LINE_ARGUMENT="p"
+#ISMUTE=$(echo "$SINK_LIST" | sed -n "$MUTE_LINE_NO$MUTE_LINE_ARGUMENT" | grep 'yes')
+SINK_NO=$( pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1 )
+
+if [ -n "$ISMUTE" ];
+then
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
+elif [[ $(pactl list sinks | grep '^[[:space:]]Volume:' | \
+    head -n $(( $SINK_NO + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,') -lt 200 ]];
+then
+  pactl -- set-sink-volume @DEFAULT_SINK@ +10%
+fi

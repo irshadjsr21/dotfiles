@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BATTERY_LOWER_BOUND=30
+
+BATTERY_INFO=$(/usr/share/i3blocks/battery)
+DISCHARGING=$(echo "$BATTERY_INFO" | grep "DIS")
+
+if [ -z "$DISCHARGING" ];
+then
+  exit
+fi
+
+BATTERY_PERC=$(echo "$BATTERY_INFO" | sed -n '1p' | grep -oP '\d+(?=%)')
+
+if [[ $BATTERY_PERC -le $BATTERY_LOWER_BOUND ]];
+then
+  notify-send --icon=gtk-info --urgency=critical "Low Battery" "The battery is at $BATTERY_PERC%, Please plug in your charger."
+fi

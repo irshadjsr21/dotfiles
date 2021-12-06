@@ -1,0 +1,5 @@
+#!/bin/bash
+
+tempLine=$(sensors | grep "temp1")
+
+echo ${tempLine:6}

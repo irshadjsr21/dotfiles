@@ -1,0 +1,3 @@
+#!/bin/bash
+
+i3lock -i /home/irshad/Wallpaper/lock-2.png; systemctl suspend

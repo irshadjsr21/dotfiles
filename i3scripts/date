@@ -1,0 +1,7 @@
+#!/bin/bash
+
+case $BLOCK_BUTTON in
+  3) gnome-calendar;;
+esac
+
+echo "🗓️ $(date '+%a - %d %b %Y - %I:%M:%S %p')"; echo '\#F5BCBA2'

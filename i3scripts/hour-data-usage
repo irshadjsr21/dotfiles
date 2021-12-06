@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DATA=$(vnstat -h --limit 1 | sed -n "7p"); DATA="${DATA#*|}"; DATA=${DATA#*|}
+
+DATA=$(echo $DATA | sed "s/|.*//")
+
+echo $DATA;

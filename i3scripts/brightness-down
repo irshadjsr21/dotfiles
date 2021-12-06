@@ -1,0 +1,11 @@
+#!/bin/bash
+
+MAX_BRIGHTNESS=937
+
+BRIGHTNESS=$(cat '/sys/class/backlight/intel_backlight/brightness')
+PERCENTAGE=$(expr $(expr $BRIGHTNESS \* 100) / $MAX_BRIGHTNESS)
+
+if [ $PERCENTAGE -gt "14" ];
+then
+  xbright -100
+fi
