@@ -1,0 +1,94 @@
+# Directories
+# cd up to n dirs
+# using:  cd.. 10   cd.. dir
+function cd_up() {
+  case $1 in
+    *[!0-9]*)                                          # if no a number
+      cd $( pwd | sed -r "s|(.*/$1[^/]*/).*|\1|" )     # search dir_name in current path, if found - cd to it
+      ;;                                               # if not found - not cd
+    *)
+      cd $(printf "%0.0s../" $(seq 1 $1));             # cd ../../../../  (N dirs)
+    ;;
+  esac
+}
+alias 'cd..'='cd_up'                                # can not name function 'cd..'
+alias 'vim'='nvim'
+
+# Utility Aliases
+alias l="ls -alh"
+alias fm='~/.config/vifm/scripts/vifmrun'
+alias fmem='free -h'
+alias tmux='tmux -u'
+alias op='xdg-open'
+# alias ide='ide-2'
+# alias ide-1='tmux split-window -v -p 30; tmux select-pane -t 0; nvim'
+# alias ide-2='tmux split-window -v -p 30; tmux split-window -h -p 50; tmux select-pane -t 0; nvim'
+# alias ide-3='tmux split-window -v -p 30; tmux split-window -h -p 66; tmux split-window -h -p 50; tmux select-pane -t 0; nvim'
+alias sag='sudo apt-get'
+alias sagi='sudo apt-get install'
+alias x='exit'
+alias mysudo='sudo -E env "PATH=$PATH"'
+alias v='vim'
+
+alias ide='ide-2'
+alias ide-1='i3-sensible-terminal .; nvim'
+alias ide-2='i3-sensible-terminal .; i3-sensible-terminal .; nvim'
+
+# Git Aliases
+alias GS='git status'
+alias GA='git add'
+alias GP='git pull --all'
+alias GPU='git push'
+alias GF='git fetch --all'
+alias GC='git checkout'
+alias GL='git log --oneline'
+
+
+# Path aliases
+alias gohome='cd ~/'
+alias gocode='cd ~/Documents/Code'
+
+# Start tmux
+alias st='gocode && tmux';
+
+# Git Conventional commit messages
+
+# Git Commit.
+function gcap() {
+    git commit -m "$*" 
+}
+
+# NEW.
+function gnew() {
+    gcap "📦 NEW: $@"
+}
+
+# IMPROVE.
+function gimp() {
+    gcap "👌 IMPROVE: $@"
+}
+
+# FIX.
+function gfix() {
+    gcap "🐛 FIX: $@"
+}
+
+# RELEASE.
+function grlz() {
+    gcap "🚀 RELEASE: $@"
+}
+
+# DOC.
+function gdoc() {
+    gcap "📖 DOC: $@"
+}
+
+# TEST.
+function gtst() {
+    gcap "✅ TEST: $@"
+}
+
+# BREAKING CHANGE.
+function gbrk() {
+    gcap "‼️ BREAKING: $@"
+}

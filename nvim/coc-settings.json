@@ -1,0 +1,6 @@
+{
+  "tsserver.formatOnType": true,
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.rootPatterns": [".git",".hg",".projections.json","tsconfig.json",".prettierrc",".eslintrc.js","lerna.json"],
+  "eslint.packageManager":"yarn"
+}
